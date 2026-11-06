@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#070509" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23070509'/%3E%3Cpath d='M12 14h40L38 54H26z' fill='%23e12828'/%3E%3Cpath d='M26 26h12l-6 18z' fill='%23ffd447'/%3E%3C/svg%3E" />
+  <title>VILLAINS: RUMBLE — 28 Villains. One Throne.</title>
+  <meta name="description" content="A 2D arcade fighting game starring Michael Myers, Chucky, Darth Vader, Bowser, Thanos, Bill Cipher and more. Best of three. No heroes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ============ TITLE ============ -->
+    <section id="screenTitle" class="screen title-screen">
+      <canvas id="titleCanvas" class="title-canvas" width="1280" height="720"></canvas>
+      <div class="title-shade"></div>
+      <div class="grain"></div>
+
+      <header class="title-top">
+        <div class="brand-mark">
+          <span class="brand-kicker">OMG! ARCADE PRESENTS</span>
+          <span class="brand-line">AN UNOFFICIAL CROSSOVER BRAWL</span>
+        </div>
+        <div class="title-top-actions">
+          <button id="soundBtn" class="icon-btn" aria-label="Toggle sound">SOUND ON</button>
+        </div>
+      </header>
+
+      <div class="title-center">
+        <p class="eyebrow title-eyebrow">NO HEROES · NO MERCY · NO REFUNDS</p>
+        <h1 class="logo" aria-label="Villains Rumble">
+          <span class="logo-villains">VILLAINS</span>
+          <span class="logo-rumble">RUMBLE</span>
+        </h1>
+        <p class="tagline">28 LEGENDS. 4 ARENAS. ONE THRONE.</p>
+        <div class="title-actions">
+          <button id="startBtn" class="btn btn-primary btn-xl">ENTER THE BRAWL <span class="btn-arrow">→</span></button>
+          <button id="helpBtn" class="btn btn-ghost">HOW TO PLAY</button>
+        </div>
+        <div class="title-meta">
+          <span class="meta-chip">BEST OF 3</span>
+          <span class="meta-chip">1–2 PLAYERS</span>
+          <span class="meta-chip">TOUCH READY</span>
+          <span class="meta-chip meta-hot">28 FIGHTERS</span>
+        </div>
+      </div>
+
+      <footer class="title-footer">
+        <span>“GROUNDED!” — BORIS ANDERSON</span>
+        <span class="foot-dot">◆</span>
+        <span>THE ROSTER IS NOT OKAY</span>
+        <span class="foot-dot">◆</span>
+        <span>WILL YOU SURVIVE?</span>
+      </footer>
+    </section>
+
+    <!-- ============ SELECT ============ -->
+    <section id="screenSelect" class="screen select-screen hidden">
+      <header class="select-header">
+        <button id="backTitle" class="btn btn-small btn-ghost">← TITLE</button>
+        <div class="select-heading">
+          <span class="eyebrow">CUSTOMIZE THE CARNAGE</span>
+          <h2>CHOOSE YOUR VILLAIN</h2>
+        </div>
+        <div class="select-modes">
+          <div class="segmented" id="modeTabs" role="tablist" aria-label="Game mode">
+            <button data-mode="cpu" class="active">VS CPU</button>
+            <button data-mode="local">2P LOCAL</button>
+          </div>
+          <div class="segmented segmented-diff" id="diffTabs" role="tablist" aria-label="CPU difficulty">
+            <button data-diff="rookie">ROOKIE</button>
+            <button data-diff="normal" class="active">STANDARD</button>
+            <button data-diff="nightmare">NIGHTMARE</button>
+          </div>
+          <button id="soundBtn2" class="icon-btn" aria-label="Toggle sound">SOUND ON</button>
+        </div>
+      </header>
+
+      <div class="select-main">
+        <aside class="preview-panel">
+          <div class="preview-frame">
+            <canvas id="previewCanvas" width="720" height="760"></canvas>
+            <div class="preview-scan"></div>
+            <div class="preview-corner tl"></div><div class="preview-corner tr"></div>
+            <div class="preview-corner bl"></div><div class="preview-corner br"></div>
+            <div class="preview-tag" id="previewCount">01 / 28</div>
+            <div class="preview-vs" id="previewVs">BROWSE THE ROSTER</div>
+          </div>
+          <div class="preview-info">
+            <p class="eyebrow" id="pvOrigin">HALLOWEEN (2002)</p>
+            <h3 id="pvName">MICHAEL MYERS</h3>
+            <p class="pv-title" id="pvTitle">THE SHAPE</p>
+            <p class="pv-quote" id="pvQuote">He waited fifteen years. He can wait for you.</p>
+            <div class="stat-grid" id="pvStats"></div>
+            <div class="special-card">
+              <span class="eyebrow">SIGNATURE MOVE</span>
+              <strong id="pvSpecial">THE SHAPE</strong>
+              <p id="pvSpecialDesc">A silent, unstoppable lunge with the kitchen knife.</p>
+            </div>
+          </div>
+        </aside>
+
+        <div class="roster-area">
+          <div class="roster-toolbar">
+            <div class="step-tabs" id="stepTabs">
+              <button data-step="0" class="active"><span>1</span> YOUR FIGHTER</button>
+              <button data-step="1"><span>2</span> OPPONENT</button>
+            </div>
+            <div class="roster-tools">
+              <button id="randomBtn" class="btn btn-small btn-ghost">🎲 RANDOM</button>
+              <button id="clearBtn" class="btn btn-small btn-ghost">CLEAR</button>
+            </div>
+          </div>
+          <div class="roster-grid" id="rosterGrid"></div>
+          <div class="arena-bar">
+            <div class="arena-label">
+              <span class="eyebrow">SELECT ARENA</span>
+              <strong id="arenaName">RANDOM</strong>
+            </div>
+            <div class="arena-list" id="arenaList"></div>
+            <button id="fightBtn" class="btn btn-primary btn-fight" disabled>FIGHT <span>→</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FIGHT ============ -->
+    <section id="screenFight" class="screen fight-screen hidden">
+      <div class="stage-wrap">
+        <div class="stage-frame">
+          <canvas id="gameCanvas" width="1280" height="720"></canvas>
+          <div class="screen-grain"></div>
+          <button id="pauseBtn" class="pause-btn" aria-label="Pause game">II</button>
+        </div>
+
+        <div id="touchControls" class="touch-controls">
+          <div class="touch-move">
+            <button class="tbtn tbtn-dir" data-touch="left" aria-label="Move left">◀</button>
+            <button class="tbtn tbtn-dir" data-touch="right" aria-label="Move right">▶</button>
+            <button class="tbtn tbtn-dir tbtn-up" data-touch="jump" aria-label="Jump">▲</button>
+          </div>
+          <div class="touch-actions">
+            <button class="tbtn tbtn-block" data-touch="block" aria-label="Block">BLOCK</button>
+            <button class="tbtn tbtn-punch" data-touch="punch" aria-label="Punch">PUNCH</button>
+            <button class="tbtn tbtn-kick" data-touch="kick" aria-label="Kick">KICK</button>
+            <button class="tbtn tbtn-special" data-touch="special" aria-label="Special move">SPECIAL</button>
+          </div>
+        </div>
+        <div class="fight-hint" id="fightHint">ESC / P — PAUSE</div>
+        <div class="rotate-hint" id="rotateHint">↻ ROTATE YOUR PHONE FOR A BIGGER FIGHT</div>
+      </div>
+
+      <div id="pauseOverlay" class="overlay hidden">
+        <div class="modal pause-modal">
+          <p class="eyebrow">THE CARNAGE CAN WAIT</p>
+          <h2>PAUSED</h2>
+          <div class="pause-fighters" id="pauseFighters"></div>
+          <div class="modal-actions">
+            <button id="resumeBtn" class="btn btn-primary">RESUME</button>
+            <button id="pauseRestartBtn" class="btn btn-ghost">RESTART MATCH</button>
+            <button id="pauseSelectBtn" class="btn btn-ghost">CHANGE FIGHTERS</button>
+            <button id="pauseTitleBtn" class="btn btn-ghost">QUIT TO TITLE</button>
+          </div>
+          <div class="pause-controls">
+            <span><b>P1</b> A/D move · W jump · S block · J punch · K kick · L special</span>
+            <span><b>P2</b> Arrows · , punch · . kick · / special</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="resultOverlay" class="overlay hidden">
+        <div class="result-modal">
+          <div class="result-glow"></div>
+          <div class="result-copy">
+            <p class="eyebrow" id="resultEyebrow">MATCH OVER</p>
+            <h2 id="resultName">MICHAEL MYERS</h2>
+            <p class="result-title" id="resultTitle">THE SHAPE</p>
+            <p class="result-quote" id="resultQuote"></p>
+            <div class="result-stats" id="resultStats"></div>
+            <div class="result-actions">
+              <button id="rematchBtn" class="btn btn-primary">REMATCH</button>
+              <button id="changeBtn" class="btn btn-ghost">CHANGE FIGHTERS</button>
+              <button id="resultTitleBtn" class="btn btn-ghost">TITLE SCREEN</button>
+            </div>
+          </div>
+          <div class="result-portrait"><canvas id="resultCanvas" width="600" height="660"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HELP ============ -->
+    <div id="helpModal" class="overlay hidden">
+      <div class="modal help-modal">
+        <button id="helpClose" class="modal-close" aria-label="Close">✕</button>
+        <p class="eyebrow">READ THE FINE PRINT</p>
+        <h2>HOW TO PLAY</h2>
+        <div class="help-grid">
+          <div class="help-col">
+            <h4>PLAYER 1</h4>
+            <div class="key-row"><kbd>A</kbd><kbd>D</kbd><span>Move</span></div>
+            <div class="key-row"><kbd>W</kbd><span>Jump</span></div>
+            <div class="key-row"><kbd>S</kbd><span>Block</span></div>
+            <div class="key-row"><kbd>J</kbd><span>Punch</span></div>
+            <div class="key-row"><kbd>K</kbd><span>Kick</span></div>
+            <div class="key-row"><kbd>L</kbd><span>Special — costs 50</span></div>
+          </div>
+          <div class="help-col">
+            <h4>PLAYER 2 / LOCAL</h4>
+            <div class="key-row"><kbd>←</kbd><kbd>→</kbd><span>Move</span></div>
+            <div class="key-row"><kbd>↑</kbd><span>Jump</span></div>
+            <div class="key-row"><kbd>↓</kbd><span>Block</span></div>
+            <div class="key-row"><kbd>,</kbd><span>Punch</span></div>
+            <div class="key-row"><kbd>.</kbd><span>Kick</span></div>
+            <div class="key-row"><kbd>/</kbd><span>Special — costs 50</span></div>
+          </div>
+          <div class="help-col">
+            <h4>THE RULES</h4>
+            <p>Best of three rounds, 60 seconds each. Empty the health bar or hold the health lead when time expires.</p>
+            <p>Dealing and taking damage fills <strong>SPECIAL</strong> meter. At 50%, fire your signature move. Blocking cuts damage by 82%.</p>
+            <p>Touch devices get on-screen controls. In local 2P, Player 2 uses the arrow cluster and <b>, . /</b>.</p>
+          </div>
+        </div>
+        <div class="help-tip">TIP: <span>Bruisers hit harder; speedsters chain combos. Specials come in four flavours — projectiles, beams, rushes and ground slams.</span></div>
+        <button id="helpDone" class="btn btn-primary">GOT IT</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="js/ui.js"></script>
+</body>
+</html>
